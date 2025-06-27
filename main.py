@@ -7,6 +7,9 @@ import numpy as np
 import tensorflow as tf
 import os
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 # --- 1. Initialize FastAPI App ---
 app = FastAPI(
     title="Sri Lankan Cassava Disease Detection API",
@@ -14,9 +17,21 @@ app = FastAPI(
     version="1.0.0"
 )
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3000/",
+    # More allowed origins can add here
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # List of allowed origins
+    allow_credentials=True,      # Allow cookies and credentials to be sent
+    allow_methods=["*"],         # Allow all HTTP methods (POST, GET, etc.)
+    allow_headers=["*"],         # Allow all headers
+)
+
 # --- 2. Load the Trained Model (happens once when API starts) ---
-# Define the path to your .h5 model file
-# IMPORTANT: Update this filename to match your downloaded model's name!
 MODEL_PATH = "models/sri_lankan_cassava_model_20250627_021853.h5"
 
 model = None
