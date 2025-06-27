@@ -23,7 +23,7 @@ model = None
 class_names = ['CMD', 'BLS', 'CBB', 'Healthy']
 IMG_HEIGHT = 224
 IMG_WIDTH = 224
-CONFIDENCE_THRESHOLD = 0.75 # Adjust this value (e.g., 0.70 to 0.90)
+CONFIDENCE_THRESHOLD = 0.75
 
 @app.on_event("startup")
 async def load_model():
@@ -34,7 +34,7 @@ async def load_model():
     global model
     try:
         model = tf.keras.models.load_model(MODEL_PATH)
-        model.summary() # Print model summary to console for verification
+        model.summary()
         print(f"✅ Model '{MODEL_PATH}' loaded successfully!")
     except Exception as e:
         print(f"❌ Error loading model: {e}")
@@ -64,15 +64,15 @@ async def predict_disease(file: UploadFile = File(...)):
     try:
         # Read the image file into a PIL Image object
         image_bytes = await file.read()
-        image = Image.open(io.BytesIO(image_bytes)).convert("RGB") # Ensure RGB format
+        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
 
         # Resize image to the target size expected by the model
         image = image.resize((IMG_WIDTH, IMG_HEIGHT))
 
         # Convert PIL Image to NumPy array and normalize pixel values
         image_array = np.array(image)
-        image_array = np.expand_dims(image_array, axis=0) # Add batch dimension
-        image_array = image_array / 255.0 # Normalize to [0, 1]
+        image_array = np.expand_dims(image_array, axis=0)
+        image_array = image_array / 255.0
     except Exception as e:
         raise HTTPException(
             status_code=400,
@@ -86,7 +86,7 @@ async def predict_disease(file: UploadFile = File(...)):
             detail="Model not loaded. Please check server logs for startup errors."
         )
 
-    predictions = model.predict(image_array)[0] # Get predictions for the single image
+    predictions = model.predict(image_array)[0]
 
     # Get the highest confidence prediction
     predicted_class_index = np.argmax(predictions)
@@ -125,4 +125,3 @@ async def root():
     Root endpoint for a simple health check.
     """
     return {"message": "Cassava Disease Detection API is running!"}
-    
