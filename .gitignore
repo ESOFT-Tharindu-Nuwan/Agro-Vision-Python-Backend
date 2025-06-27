@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.DS_Store
+*.db
+
+# Virtual environments
+venv/
+env/
+.venv/
+.direnv/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Models and data - CRITICAL!
+# Do not commit large model files. Use Git LFS if needed.
+*.h5
+*.keras
+*.pb
+*.tflite
+models/
+data/
+train/
+validation/
+test/
+
+# Other
+*.log
+Thumbs.db
