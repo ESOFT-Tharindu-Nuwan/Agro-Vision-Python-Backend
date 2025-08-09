@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-# from app.schemas.yield import YieldInput, YieldOutput
+from app.schemas.yield_schema import YieldInput, YieldOutput
 import joblib, pandas as pd
 from typing import Optional
 

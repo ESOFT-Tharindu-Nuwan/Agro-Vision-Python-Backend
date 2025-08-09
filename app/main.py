@@ -24,7 +24,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(disease.router)
-# app.include_router(yield_pred.router)
+app.include_router(yield_pred.router)
 
 @app.get("/")
 def root():
