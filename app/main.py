@@ -11,7 +11,6 @@ app = FastAPI(
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    # add your deployed frontends here
 ]
 
 app.add_middleware(
@@ -22,7 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
 app.include_router(disease.router)
 app.include_router(yield_pred.router)
 
